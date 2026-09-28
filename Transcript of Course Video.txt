@@ -154,4 +154,4 @@
 153. The flood impact statistics, such as square kilometers of floods and flood-affected population by admin units, were automatically generated and displayed on the dashboard.
 154. UNISAD Flood AI was able to process all the available Sentinel-1 overlapping with the area of interest shared by the Information Management Unit of the United Nations Resident Coordination Office in NAPEL during the 29 days of activation.
 155. SAT has collaborated with NVIDIA on training and research activities to promote the use of AI in support of these sustainable development goals.
-156. Our efforts are dedicated to serve a central vision: the promotion of evidence-based decision-making for peace, security, and resilience.  the end! 
+156. Our efforts are dedicated to serve a central vision: the promotion of evidence-based decision-making for peace, security, and resilience.the end! 
