@@ -1,0 +1,157 @@
+
+1. Welcome to NVIDIA's Deep Learning Institute.
+2. We're excited you're here.
+3. In this course, you'll learn all the details about an end-to-end disaster risk monitoring system that uses remote sensing and deep learning.
+4. We've prepared some great materials for you.
+5. Let's get started.
+6. The course is broken down into three parts.
+7. Upon completion,
+8. You'll have learned the tools necessary to train a flood detection segmentation model and deploy it into production for inference.
+9. First, we'll begin by discussing our motivation for this project.
+10. Next, we'll learn about data preprocessing for deep learning and how it's applied to image data.
+11. We'll then learn about training deep learning models efficiently using transfer learning.
+12. Once we finish training the segmentation model, we'll export it and learn about production model deployment.
+13. As bonus, we've also included a separate activity to demonstrate a state-of-the-art approach for training segmentation models using a semi-supervised approach.
+14. We think that this course should take approximately four hours to finish, but we've also included references to additional content that'll help you get a deeper understanding of the topics covered.
+15. Go ahead and click on the Start button below.
+16. You should now see a spinning wheel where the Start button used to be.
+17. Eventually, that spinning wheel will become a launch button.
+18. While it's loading, a GPU-accelerated server is being prepared for interactive activities.
+19. Data sets, frameworks, and software are being loaded to the instance for this course.
+20. Once it's finished and you launch the task, you'll see a JupyterLab containing instructions, activities, and links to guide you through the next sections.
+21. While we're waiting, let's go through some basics about what we'll learn in the course.
+22. Most of the materials presented here will also be included in the Jupyter lab.
+23. We envision a disaster risk monitoring system that consists of several components.
+24. First, remote sensors, such as satellites, capture data in real time and sends them to a data center.
+25. We'll use some historical data to train deep learning models.
+26. The models will evolve over time, so we want to use a model repository to manage and compare different versions.
+27. The inference engine should provide status and health metrics to help us manage the operation.
+28. Of course, the data captured is passed to the inference engine to generate insights.
+29. The deep learning-based insights will enable analytics and alerts to be delivered to end users.
+30. A critical design consideration for this system is ensuring that data flows efficiently through each component to enable near real-time results.
+31. Before we move to the hands-on portion of the course, we wanted to highlight some criteria to help us measure the success of a deep learning-based solution.
+32. In addition to the models being accurate, it should also be scalable, generalizable, accessible, and deployed in real time.
+33. With these important considerations in mind, we're excited to show you how this can all be put together in the cloud environment we've prepared for you.
+34. Natural disasters can come in different forms.
+35. They're a drain on the economy and sometimes leads to loss of human lives.
+36. Until recently, they've been difficult to dealt with due to their enormous scale and lack of information on them.
+37. With rapid advancements in technology and rise in public awareness of the issue, we're now able to use innovative tools to tackle this problem.
+38. While this lab focuses primarily on detecting flood events, similar applications can be created for other natural disasters.
+39. Unfortunately, the impact of flooding events are getting worse due to climate change and rising sea levels.
+40. Because of the increase in their frequency and intensity, the topic of flood has garnered the attention of large international organizations.
+41. As an example, the United Nations have maintained effective response and proactive risk assessment for flood and their Sustainable Development Goals.
+42. The ability to accurately detect and measure the extent of flood can first and foremost help decision-makers develop tactical responses.
+43. Furthermore, it helps scientists and researchers study flood behavior over time.
+44. Ultimately, we want to enable long-term mitigation strategies to help us achieve sustainability.
+45. Remote sensors, such as satellites, are excellent for monitoring flood events over time where physical access is difficult.
+46. Satellites are usually categorized by their application and the orbit in which they operate.
+47. And the lower Earth orbit is where most activities take place due to the desirable speed of orbit and data transfer.
+48. The Copernicus Sentinel-1 mission comprises of two identical satellites used for Earth observation.
+49. They can capture the entire planet in just six days.
+50. Unlike optical sensors, they use C-band synthetic aperture radar, which allows them to operate more consistently.
+51. They fulfilled their objective to provide continuous radar mapping of the Earth with enhanced revisit frequency, coverage, timeliness, and reliability.
+52. This is ideal for operational services and applications that require long time series.
+53. Modern computer vision, using machine learning techniques, have gained the ability to perform sophisticated tasks.
+54. The advancement is contributed to increase in computational capabilities
+55. speed, as well as availability of training data.
+56. For our use case, we'll use false color images and their corresponding hand-labeled masks to develop segmentation models.
+57. With the model, the neural network will learn what characteristics and patterns in the images are indicative of flood from the training data set.
+58. Once trained, it can label new images based on this artificial intelligence to identify flooded regions.
+59. This insight can then be used for downstream analytics and/or raise alerts.
+60. While this has shown promising results, harnessing this technology is not without some challenges.
+61. This is our starting point.
+62. We have a large dataset of Sentinel-1 images along with hand-labeled masks.
+63. It's important to understand that Sentinel-1 collects data using synthetic aperture radar.
+64. The images shown here are an interpretation of the data collected.
+65. In other words,
+66. These are false color RGB images.
+67. From these images, we notice that the extent of flood can vary, so getting the model to accurately detect and delineate open water flooded areas in a timely manner will be extremely valuable.
+68. Here's the typical machine learning workflow.
+69. We start by pre-processing a large set of data and use them to train a model.
+70. Once the model is trained, we can then deploy it into production.
+71. Generally,
+72. Deep learning model performance increases when we train with more data, but the process is time-consuming and computationally intensive.
+73. Furthermore, the annotated data needed for training can be costly to acquire.
+74. Fine-tuning the models to achieve the desired performance also requires significant effort before it's optimized for inference.
+75. Once deployed, the model needs to be monitored and continuously maintained in case of drifts.
+76. In this course,
+77. We'll walk through the process and help you understand the development workflow.
+78. NVIDIA Data Loading Library is a library for data loading and pre-processing to accelerate deep learning applications.
+79. It provides a collection of highly optimized building blocks for loading and processing images, videos, and audio data.
+80. These processes have traditionally been performed on the CPU, which have become a bottleneck, particularly when the data set is large.
+81. The data loading library addresses the problem by offloading data preprocessing to the GPU.
+82. The same preprocessing pipeline used on the training data set can also be applied to the data for inference.
+83. In addition, the data loading library also allows us to perform data augmentation, which will help us achieve accurate inference results.
+84. Data augmentation artificially increases the size of a data set by introducing random disturbances to the data, such as geometric deformation,
+85. color transforms, noise additions, and so on.
+86. These disturbances actually help produce models that are more robust in their predictions, are less prone to overfitting, and deliver better accuracy overall.
+87. The NVIDIA Train, Adapt, Optimize, or TAO toolkit is used to train deep learning models.
+88. As you'll learn, this framework simplifies the model development workflow.
+89. It lets developers fine-tune pre-trained models with custom data to produce highly accurate models efficiently, eliminating the need for large training runs and deep AI expertise.
+90. This is achieved through transfer learning.
+91. When training deep learning models, it's rare and inefficient to start the learning task from scratch on a network with randomly initialized weights due to factors like data scarcity, which means inadequate number of training samples, or prolonged training times.
+92. One of the most common techniques to overcome this is to use transfer learning.
+93. Transfer learning is the process of transferring learned features from one application to another.
+94. This works surprisingly well, as many of the early layers in a neural network are the same for similar tasks.
+95. After the model is trained and tested, it's ready for deployment using NVIDIA Train Inference Server.
+96. It optimizes models for inference,
+97. and enables model management through a file system-based repository.
+98. Once the inference server is configured, it can accept client requests via various network protocols.
+99. Spending time to tune the server to optimize inference performance allows results to be produced quickly.
+100. Speaking of reducing time to deliver insights, deep learning inference can now be done on edge devices to enable real-time analytics.
+101. With the arrival of powerful, low-energy consumption IoT devices,
+102. Computations can now be executed on the edge.
+103. When inference is performed on the edge near sensors, we can benefit in several ways.
+104. For example, faster response time for when decisions based on data processing must be made immediately.
+105. Lower bandwidth cost since the amount of data to transfer can be managed.
+106. Mitigate network-related problems if there's no or low network connectivity in remote locations.
+107. Improve data privacy and
+108. security, since edge devices can be programmed to discard sensitive data after it's been processed.
+109. Included in this course is a case study from UNISAT on their rapid mapping service, where they're using satellite imagery analysis to support humanitarian emergencies around the world.
+110. The United Nations Satellite Center, UNISAT, is part of the United Nations Institute for Training and Research, UNITAR,
+111. with a mandate to provide United Nations funds, programs, and specialized agencies with satellite analysis at their request, as well as to support member states with satellite image analysis over their respective territories and to provide training and capacity development in the use of geospatial information technologies on the basis of voluntary contributions.
+112. Since 2001, UNISAT has provided the United Nations system with access to satellite imagery and satellite-derived analysis through the development and provision to Earth observation and GIS applications.
+113. The program has spearheaded the use of these technologies in various fields of application, namely for emergency response, disaster risk reduction, peace and security, but also for the production of cultural heritage and monitoring and evaluation of development projects.
+114. Since 2005, UNISAT has also provided training and capacity development activities for humanitarian relief and human security, human rights, crisis management and prevention, recovery and development, in alignment with its commitment towards supporting the Sustainable Development Goals.
+115. UNISAT is also designing, developing, and deploying machine learning models applied to satellite imagery for humanitarian assistance and disaster response, such as flood analysis, shelter mapping, building footprints,
+116. damage assessment, and more.
+117. Much of UNISAT's technology strength is made possible thanks to certain IT infrastructures, including virtually unlimited network storage space.
+118. The UNISAT team consists of UN field workers, as well as satellite imagery analysts and geographic information system experts supported by IT, data scientists, and database engineers.
+119. This unique combination gives the ability to understand the needs of users and to provide them with sustainable, tailored solutions anywhere at any time.
+120. UNISAT operates around the world, from headquarters in Geneva with regional offices in Bangkok, Nairobi, and New York.
+121. UNISAT is also represented in the Pacific and Fiji and the Solomon Islands.
+122. Operational since 2003, the UNISAT Rapid Mapping Service offers a 24/7, year-round availability to process requests from humanitarian actors and to deliver satellite imagery-derived analysis ,
+123. reports, and data ready to use following major sudden onset disaster events and conflict situations.
+124. Typical situations for which GNSAT rapid mapping is aggravated includes floods, earthquakes, storms, landslides, volcanoes, oil spills, chemical waste, refuge, and internally displaced person camping mapping.
+125. Conflict damage assessment and situation analysis.
+126. UNICET Emergency Mapping Service provides wide and timely distribution of rapid mapping products to UN member states, UN agencies, Red Cross and Red Crescent Movement, international and regional organizations, humanitarian non-governmental organizations (NGOs) to support evidence-based operational planning and decision-making of humanitarian actors in the field and at the headquarter level.
+127. In the sudden onset of a natural disaster, the UNISAT geospatial catalog offers a predictable mechanism which provides a full range of products to supply the humanitarian community with timely and reliable information, based on satellite imagery analysis for humanitarian and developmental operations.
+128. The graph shows the different satellite imagery-derived products throughout each phase.
+129. During phases 0 and 1 of the emergency response,
+130. Satellite imagery analysis is undertaken to provide a preliminary analysis of exposure and impact.
+131. During Phase 2 of the emergency response, satellite imagery damage assessment is undertaken to identify potentially affected buildings.
+132. During Phase 3, reconstruction, economic and social recovery, and post-disaster needs assessment is undertaken.
+133. In case of a flood event, UNISAT Rapid Mapping Service will share preliminary situation awareness map on Phase 0.
+134. The rapid impact analysis on Phase 1 included impact and preliminary damage assessment and the cumulative flood extent and the sectoral assessment in Phase 2, together with the ongoing flood monitoring.
+135. During this course, we will focus on Phase 1, and in particular, on the creation of a flood segmentation model assessing the potentially affected population during a flood event in Nepal during July 2021.
+136. In the summer of 2021, UNISAT introduced an artificial intelligence-based solution in its operational emergency mapping service by reducing the process to a fraction of the time it normally took.
+137. In particular, an artificial intelligence model for flood mapping was then integrated into an end-to-end pipeline, where Sentinel-1 radar images of flood-prone areas are automatically downloaded and processed by machine learning algorithms to output flood sector data,
+138. compute the impact analysis, including the potentially affected population, and update operational dashboards.
+139. Once Unisat Flood AI service is activated, all the available Sentinel-1 images overlapping the area of interest are downloaded and processed based on the Sentinel-1 coverage frequency.
+140. Flood AI was deployed on NVIDIA GPUs at the European Organization for Nuclear Research, CERN, connected to a data storage server and a high-speed CERN internet connection.
+141. Let's now focus on some use cases.
+142. The 2021 Southwest monsoon season brought massive flooding in several countries across Asia, leading to dam collapse, flash floods, and landslides.
+143. Millions of people were displaced in China, Bangladesh, India, Pakistan, Nepal, and Myanmar.
+144. According to climate models and long-term forecast, the number of people exposed to floods in Asia and Africa will likely continue to increase in coming years.
+145. Access to dynamic flood updates together with impact analysis, such as the statistics of the exposed and affected population, and inaccessible roads have the potential to support the United Nations, relief agency, civil protection, government agencies, National Disaster Management Institute, policy and decision makers during the disaster response.
+146. In the next slide, we'll see how UNISAT AI solutions supported its operation during the 2021 monsoon season in Nepal.
+147. During June 2021, Nepal was particularly hit by heavy rainfall.
+148. Flooding and landslides were reported in many parts of the country and affected thousands of families.
+149. In August 2021, rainfall intensified again for several consecutive days, with rivers overflowing, landslides triggered across the hills, and widespread inundation in the southern plains.
+150. In the affected areas, many houses, informal settlements, and other buildings were destroyed, forcing people to seek refuge with relatives or in temporary shelters.
+151. Health and sanitation concerns arose as access to running water became limited, increasing the risk of waterborne disease transmission and limiting the ability to adhere to preventative measures against COVID-19.
+152. To rapidly respond, UNISAT Rapid Mapping System deployed the AI Flood Detection Dashboard displayed on the screen.
+153. The flood impact statistics, such as square kilometers of floods and flood-affected population by admin units, were automatically generated and displayed on the dashboard.
+154. UNISAD Flood AI was able to process all the available Sentinel-1 overlapping with the area of interest shared by the Information Management Unit of the United Nations Resident Coordination Office in NAPEL during the 29 days of activation.
+155. SAT has collaborated with NVIDIA on training and research activities to promote the use of AI in support of these sustainable development goals.
+156. Our efforts are dedicated to serve a central vision: the promotion of evidence-based decision-making for peace, security, and resilience.  the end! 
